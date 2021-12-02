@@ -24,8 +24,6 @@ class DepthChecker
   end
 
   def check_window
-    depth_increase_count = 0
-
     data = open_puzzle_data()
 
     collection = data.each_cons(3).map do |a, b, c|
