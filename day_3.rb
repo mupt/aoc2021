@@ -6,32 +6,38 @@ class Reporter
 
     data = puzzle_input.readlines(chomp: true)
 
-    gamma_rate = 0
-    epsilon_rate = 0
+    gamma_rate = ""
+    epsilon_rate = ""
     power_consumption = 0
+    returned_matrix = Matrix[]
     new_matrix = Matrix[]
 
     #Create a collection of each column
     #Find the most common bit
     #push the most common bit into a separate data structure
 
-    data.each_with.index.map { |a, idx|
-
+    data.each_with_index.map { |a, idx|
 
       row = a.split("").map(&:to_i)
 
-      #puts row.inspect
+      returned_matrix =
+        if idx == 0
+          Matrix.rows(new_matrix.to_a << row)
+        else
+          Matrix.rows(returned_matrix.to_a << row)
+        end
 
-      if idx == 0
-        returned_matrix = Matrix.rows(new_matrix.to_a << row)
-      else
-        returned_matrix = Matrix.rows(returned_matrix.to_a << row)
-      end
-
-      puts returned_matrix.inspect
     }
 
 
+    i = 0
 
+    while i < returned_matrix.column_size()
+      bit = returned_matrix.column(i).max_by{ |bit| returned_matrix.column(i).count(bit)}
+      gamma_rate = gamma_rate.concat(bit.to_s)
+      i += 1
+    end
+
+    puts gamma_rate.to_i(2)
 end
 
